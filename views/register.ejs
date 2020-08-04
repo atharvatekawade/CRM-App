@@ -1,0 +1,133 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <style>
+            body{
+                margin:0;
+                padding:0;
+                background-position: center;
+                font-family: sans-serif;
+                z-index: 0;
+                background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSB9jHpzul4Scnc__ndD-97WWjdGwBc-Z_hSw&usqp=CAU');
+                background-size: cover;
+            }
+            .loginbox{
+                border-radius: 24px;
+                width: 358px;
+                height: 480px;
+                color:#fff;
+                background-color:white;
+                top:50%;
+                left: 50%;
+                position: absolute;
+                transform: translate(-50%,-50%);
+                box-sizing: border-box;
+                z-index: 20;
+                padding: 40px 30px;
+            }
+            .avatar{
+                width: 120px;
+                height: 127px;
+                border-radius: 60%;
+                border:blueviolet;
+                position:absolute;
+                top:-50px;
+                left:calc(50% - 50px);
+                z-index: 40;
+            }
+            h1{
+                margin: 0;
+                padding: 0 0 20px;
+                text-align: center;
+                font-size: 22px;
+            }
+            .loginbox p{
+                margin: 0;
+                padding: 0;
+                font-weight: bold;
+            }
+            .loginbox input{
+                width:100%;
+                margin-bottom: 20px;
+            } 
+            .login input[type='text']{
+                
+                border-bottom: 1px solid red;
+                background: transparent;
+                outline:none;
+                height:40px;
+                
+            }
+            .login input[type='password']{
+                border: none;
+                border-bottom: 1px solid rgba(20,20,20,0.92);
+                outline:none;
+                height:40px;
+                
+                
+            }
+            .a{
+                z-index: 50;
+                color: white;
+                border: none;
+            }
+            .b{
+                color:black;
+                z-index: 45;
+                background-color: transparent;
+                border-top: none;
+                border-left: none;
+                border-right: none;
+                border-bottom: 1px solid rgba(200,200,200,0.76);
+                outline: none;
+            }
+            #alert{
+                font-weight: 40px;
+                color:rgba(245,20,0,0.95)
+            }
+            #test{
+                font-weight: 40px;
+                color:rgba(0,0,0,0)
+            }
+        </style>
+    </head>
+    <body onmouseover="checkform()">
+        <div class='container'>
+            <div class='loginbox'>
+                <h1 class='mt-2' style="color: black; font-family: Georgia, 'Times New Roman', Times, serif; position: relative; top: 15px; font-size: 30px;">Register here</h1>
+                <% if(red!==undefined && red.length>0){ %>  
+                    <p id='alert' style="font-size:13px" class='mb-3'>*<%= red %></p>
+                <% } %>
+                <% if(red === undefined || red.length===0){ %>
+                    <p id='test' style="font-size:13px" class='mb-3'>Hi</p>
+                <% } %>
+                <form method='POST' autocomplete="off">
+                    <input type="text" name='username' placeholder='Username' class='b' id='username'>
+                    <p>Password</p>
+                    <input type="email" name='email' placeholder='Email' class='b' id='email'>
+                    <input type="tel" name='time' placeholder='Reminder Frequency(In Days)' pattern="[0-9]{2}" class='mt-4 b' id='time'>
+                    <input type="password" name='password' placeholder='Password' class="mt-4 b" id='password'>
+                    <input type="submit" value='Register' class='btn btn-primary mt-4 a' id="submitbutton" disabled="disabled" style="color: white;" />
+                </form>
+            </div>
+        </div>
+        <script type="text/javascript" language="javascript">
+            function checkform()
+            {
+                let a = document.getElementById('username').value.length;
+                let b = document.getElementById('email').value.length;
+                let c = document.getElementById('time').value.length;
+                let d = document.getElementById('password').value.length;
+                let cansubmit = true;
+    
+                if(a*b*c*d===0){
+                    cansubmit=false;
+                }
+        
+                
+        
+                document.getElementById('submitbutton').disabled = !cansubmit;
+            }
+        </script> 
+    </body>
+</html>

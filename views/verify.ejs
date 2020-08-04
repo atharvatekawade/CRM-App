@@ -1,0 +1,24 @@
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<div class="container mt-5">
+    <p style="font-size: 20px;">A token has been sent to you on your email account. Please Enter it within 5 minutes</p>
+    <form method="POST" action="/verify/<%= name %>">
+        <div class="form-group">
+            <label for="token"><b>Token:</b></label>
+            <i class="fa fa-key" aria-hidden="true" style="position: relative; top: 40px; left: -35px;"></i><input type="password" name='token' class="form-control pl-5" id="token" placeholder="Enter Token" />
+        </div>
+        <button class="btn btn-outline-secondary">Verify</button>
+    </form>
+</div>
+
