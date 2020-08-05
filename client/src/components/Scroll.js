@@ -11,28 +11,31 @@ export default class Scroll extends Component{
             messages:[],
             client:this.props.client,
             show:false,
+            unread:'0'
         }
+    }
+
+    get = () => {
+        axios.get('/messages/'+this.props.client)
+            .then(res => this.setState({messages:res.data}))
+        axios.get('/unread/'+this.props.client)
+            .then(res => this.setState({unread:res.data}))
     }
 
     componentDidMount(){
-        //console.log(this.props.client);
-        axios.get('/messages/'+this.props.client)
-            .then(res => this.setState({messages:res.data}))
+        this.get();
+        this.timer = setInterval(() => this.get(), 5000);
     }
 
-    componentDidUpdate(prevProps,prevState){
-        if(this.state.messages!==prevState.messages){
-            if(this.state.messages!==prevState.messages){
-                axios.get('/messages/'+this.props.client)
-                    .then(res => this.setState({messages:res.data}))
-            }
-        }
-    }
+    componentWillUnmount() {
+        this.timer = null;
+    }  
 
     toggle = () => {
         let c='#content'+this.props.client.toString();
         $(c).scrollTop('0')
-        this.setState({show:!this.state.show})
+        axios.post('/read/'+this.props.client)
+            .then(res => this.setState({show:!this.state.show,unread:0}))
     }
 
     render(){
@@ -49,8 +52,14 @@ export default class Scroll extends Component{
         t=t+'px';
         return(
                 <div className='center' id={d}>
-                    {!this.state.show && 
+                    {!this.state.show && Number(this.state.unread)===0 &&
                         <button type="button" className="btn btn-secondary" onClick={this.toggle} style={{position:"relative",top:"18px"}}><i class="fa fa-lg fa-sticky-note-o" aria-hidden="true"></i></button>
+                    }
+                    {!this.state.show && Number(this.state.unread)>0 &&
+                        <div>
+                            <button type="button" className="btn btn-secondary" onClick={this.toggle} style={{position:"relative",top:"18px",right:"-9px"}}><i class="fa fa-lg fa-sticky-note-o" aria-hidden="true"></i></button>
+                            <span style={{position:"relative",top:"0px",right:"2px"}} className='dott'><span style={{position:"relative",top:"0.2px"}}>{this.state.unread}</span></span>
+                        </div>
                     }
                     {this.state.show && 
                         <div>

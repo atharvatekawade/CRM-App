@@ -59,7 +59,7 @@ export default class Edit extends Component{
         let c="modal"+this.props.client;
         return(
             <div className='container'>
-                <button type="button" className='mt-1 ml-2' data-toggle="modal" data-target={m} style={{backgroundColor:"White",border:"none",outline:"none",position:"relative",top:"2px",left:"8px"}}><i class="fa fa-lg fa-envelope" aria-hidden="true" style={{color:"rgba(20,20,29,0.7)"}}></i></button>
+                <button type="button" className='mt-1 ml-2' data-toggle="modal" data-target={m} style={{backgroundColor:"White",border:"none",outline:"none",position:"relative",top:"3px",left:"8px"}}><i class="fa fa-lg fa-envelope" aria-hidden="true" style={{color:"rgba(20,20,29,0.7)"}}></i></button>
                 <div id={c} className="modal fade" role="dialog">
                     <div className="modal-dialog">
                         <div className="modal-content">
@@ -67,13 +67,13 @@ export default class Edit extends Component{
                         <div class="modal-body">
                             <h6><p>Send mail to Admin</p></h6>
                             {this.state.loading &&
-                                <b><p style={{fontSize:"14px"}}>Loading....</p></b>
+                                <b><p style={{fontSize:"14px"}}>Sending....</p></b>
                             }
                             {this.state.err==="Authentication unsuccessful" && !this.state.loading &&
                                 <b><p style={{fontSize:"14px",color:"Red"}}><span style={{color:"Red"}} className='mr-1'>*</span>Authentication Failed</p></b>
                             }
                             {this.state.err!=="Authentication unsuccessful" && this.state.err.length>0 && !this.state.loading &&
-                                <b style={{color:"Green"}}><p style={{fontSize:"14px"}}><span className='mr-1'>*</span>Mail sent successfully</p></b>
+                                <b style={{color:"Green"}}><p style={{fontSize:"14px",color:"Green"}}><span className='mr-1'>*</span>Mail sent successfully</p></b>
                             }
                             {this.state.err!=="Authentication unsuccessful" && this.state.err.length===0 && !this.state.loading && 
                                 <b style={{color:"rgba(0,0,0,0)"}}><p style={{fontSize:"14px",color:"rgba(0,0,0,0)"}}><span className='mr-1'>*</span>Hello</p></b>

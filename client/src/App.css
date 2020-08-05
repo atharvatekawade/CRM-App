@@ -72,7 +72,27 @@
   width: 400px;
 }
 
+.dot {
+  text-align: center;
+  z-index: 20;
+  height: 18px;
+  width: 19px;
+  color: white;
+  background-color: rgb(204,22,24);
+  border-radius: 50%;
+  display: inline-block;
+}
 
+.dott {
+  text-align: center;
+  z-index: 20;
+  height: 27px;
+  width: 28px;
+  color: white;
+  background-color: rgb(204,22,24);
+  border-radius: 50%;
+  display: inline-block;
+}
 
 
 .shadow {

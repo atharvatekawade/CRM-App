@@ -350,6 +350,29 @@ app.post('/msg/:id',CheckLog,async(req,res) => {
     }
 })
 
+app.post('/read/:id',(req,res) => {
+    console.log('You hit the read post route');
+    const id=Number(req.params.id);
+    if(req.user.user_id==id){
+        pool.query(
+            "UPDATE messages SET view=$1 WHERE receive=$2",
+            ['Yes',id],(err,result) => {
+                if(err) throw err;
+                res.send("Viewed");
+            }
+        );
+    }
+    else{
+        pool.query(
+            "UPDATE messages SET view=$1 WHERE sender=$2",
+            ['Yes',id],(err,result) => {
+                if(err) throw err;
+                res.send("Viewed");
+            }
+        );
+    }
+})
+
 app.get('/second',(req,res) => {
     let d = new Date();
     let n = d.getTime();
@@ -357,6 +380,32 @@ app.get('/second',(req,res) => {
     n=Math.floor(n);
     n=n.toString();
     res.send(n);
+})
+
+app.get('/unread/:id',(req,res) => {
+    const id=Number(req.params.id);
+    if(req.user.user_id!==1){
+        pool.query(
+            "SELECT * FROM messages WHERE receive=$1 AND view=$2",
+            [id,'Not'],(err,result) => {
+                if(err) throw err;
+                const arr=result.rows;
+                arr.sort((a,b) => (a.stamp < b.stamp) ? 1 : ((b.stamp <= a.stamp) ? -1 : 0));
+                res.send(arr.length.toString());
+            }
+        );
+    }
+    else{
+        pool.query(
+            "SELECT * FROM messages WHERE sender=$1 AND view=$2",
+            [id,'Not'],(err,result) => {
+                if(err) throw err;
+                const arr=result.rows;
+                arr.sort((a,b) => (a.stamp < b.stamp) ? 1 : ((b.stamp <= a.stamp) ? -1 : 0));
+                res.send(arr.length.toString());
+            }
+        );
+    }
 })
 
 app.get('/messages/:id',(req,res) => {
