@@ -130,8 +130,6 @@ async function commute(sender,receiver,body,subject,password){
             pass: password
         }
     });
-    console.log(sender);
-    //console.log(password);
     const mailOptions = {
         from: sender, // sender address
         to: receiver,
@@ -350,8 +348,7 @@ app.post('/msg/:id',CheckLog,async(req,res) => {
     }
 })
 
-app.post('/read/:id',(req,res) => {
-    console.log('You hit the read post route');
+app.post('/read/:id',CheckLog,(req,res) => {
     const id=Number(req.params.id);
     if(req.user.user_id==id){
         pool.query(
@@ -362,7 +359,7 @@ app.post('/read/:id',(req,res) => {
             }
         );
     }
-    else{
+    else if(req.user.user_id==1){
         pool.query(
             "UPDATE messages SET view=$1 WHERE sender=$2",
             ['Yes',id],(err,result) => {
@@ -371,20 +368,15 @@ app.post('/read/:id',(req,res) => {
             }
         );
     }
+    else{
+        res.redirect('http://localhost:3000/');
+    }
 })
 
-app.get('/second',(req,res) => {
-    let d = new Date();
-    let n = d.getTime();
-    n=n/100;
-    n=Math.floor(n);
-    n=n.toString();
-    res.send(n);
-})
 
-app.get('/unread/:id',(req,res) => {
+app.get('/unread/:id',CheckLog,(req,res) => {
     const id=Number(req.params.id);
-    if(req.user.user_id!==1){
+    if(req.user.user_id==id){
         pool.query(
             "SELECT * FROM messages WHERE receive=$1 AND view=$2",
             [id,'Not'],(err,result) => {
@@ -395,7 +387,7 @@ app.get('/unread/:id',(req,res) => {
             }
         );
     }
-    else{
+    else if(req.user.user_id==1){
         pool.query(
             "SELECT * FROM messages WHERE sender=$1 AND view=$2",
             [id,'Not'],(err,result) => {
@@ -406,12 +398,14 @@ app.get('/unread/:id',(req,res) => {
             }
         );
     }
+    else{
+        res.redirect('http://localhost:3000/');
+    }
 })
 
 app.get('/messages/:id',(req,res) => {
     const id=Number(req.params.id);
-    //if(id===Number(req.user.user_id) || Number(req.user.user_id)===1){
-    if(true){
+    if(id===Number(req.user.user_id) || Number(req.user.user_id)===1){
         pool.query(
             "SELECT * FROM messages WHERE sender=$1 OR receive=$2",
             [id,id],(err,result) => {
